@@ -24,17 +24,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/investment-plans/{plan}', [InvestmentPlanController::class, 'show']);
 
     Route::post('/investments', [InvestmentController::class, 'store']);
-
     Route::get('/investments', [InvestmentController::class, 'index']);
-
     Route::get('/investments/{investment}', [InvestmentController::class, 'show']);
-
-    Route::post('/investments/{investment}/withdrawal', function () {
-        return response()->json([
-            'message' => 'Implement specific investment withdrawal, send an email notification, compute right accrued_interest',
-        ]);
-    });
-
+    Route::post('/investments/{investment}/withdrawal', [InvestmentController::class, 'withdraw']);
     Route::get('/user', function (Request $request) {
         return $request->user();
     });

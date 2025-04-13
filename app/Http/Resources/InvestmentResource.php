@@ -29,7 +29,7 @@ class InvestmentResource extends JsonResource
             'status'                => $this->status,
             'is_withdrawable'       => $this->is_withdrawable,
             'days_remaining'        => $this->when($this->status === 'active', max(0, now()->diffInDays($this->end_date, false))),
-            'days_active'           => now()->diffInDays($this->start_date),
+            'days_active'           => floor($this->start_date->diffInDays(now())),
             'plan'                  => $this->whenLoaded('investmentPlan', function () {
                 return [
                     'id'          => $this->investmentPlan->id,

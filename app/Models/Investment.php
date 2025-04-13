@@ -24,15 +24,18 @@ class Investment extends Model
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'amount'        => 'decimal:2',
-        'current_value' => 'decimal:2',
-        'return_rate'   => 'decimal:4',
-        'start_date'    => 'date',
-        'end_date'      => 'date',
-        'withdrawn_at'  => 'date',
-    ];
-
+    protected function casts()
+    {
+        return [
+            'amount'        => 'decimal:2',
+            'current_value' => 'decimal:2',
+            'return_rate'   => 'decimal:4',
+            'start_date'    => 'datetime',
+            'end_date'      => 'datetime',
+            'withdrawn_at'  => 'datetime',
+            'created_at'    => 'datetime',
+        ];
+    }
     /**
      * Get the user that owns the investment.
      */
@@ -77,7 +80,7 @@ class Investment extends Model
 
         // Calculate days passed since investment start
         $daysElapsed = min(
-            Carbon::now()->diffInDays($this->start_date),
+            $this->start_date->diffInDays(Carbon::now()),
             $this->lock_period
         );
 

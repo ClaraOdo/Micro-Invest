@@ -223,10 +223,6 @@ class InvestmentController extends Controller
                 ],
             ]);
 
-            // Add to user balance
-            $user->balance += $withdrawalAmount;
-            $user->save();
-
             DB::commit();
 
             // Send notification
@@ -236,10 +232,9 @@ class InvestmentController extends Controller
                 'status'  => 'success',
                 'message' => 'Investment withdrawn successfully',
                 'data'    => [
-                    'withdrawal_amount'  => $withdrawalAmount,
-                    'initial_investment' => $investment->amount,
-                    'interest_earned'    => $withdrawalAmount - $investment->amount,
-                    'new_balance'        => $user->balance,
+                    'withdrawal_amount'  => number_format($withdrawalAmount),
+                    'initial_investment' => number_format($investment->amount),
+                    'interest_earned'    => number_format($withdrawalAmount - $investment->amount),
                 ],
             ]);
 
