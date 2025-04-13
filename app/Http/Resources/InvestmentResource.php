@@ -28,7 +28,7 @@ class InvestmentResource extends JsonResource
             'withdrawn_at'          => $this->when($this->withdrawn_at, $this->withdrawn_at?->format('Y-m-d')),
             'status'                => $this->status,
             'is_withdrawable'       => $this->is_withdrawable,
-            'days_remaining'        => $this->when($this->status === 'active', max(0, now()->diffInDays($this->end_date, false))),
+            'days_remaining'        => floor($this->when($this->status === 'active', max(0, now()->diffInDays($this->end_date, false)))),
             'days_active'           => floor($this->start_date->diffInDays(now())),
             'plan'                  => $this->whenLoaded('investmentPlan', function () {
                 return [
