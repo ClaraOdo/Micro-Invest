@@ -7,6 +7,7 @@ use App\Http\Resources\InvestmentResource;
 use App\Models\Investment;
 use App\Models\InvestmentPlan;
 use App\Models\Transaction;
+use App\Notifications\InvestmentCreated;
 use App\Notifications\InvestmentWithdrawn;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -139,7 +140,7 @@ class InvestmentController extends Controller
             DB::commit();
 
             // Send notification
-            // $user->notify(new InvestmentCreated($investment));
+            $user->notify(new InvestmentCreated($investment));
 
             return response()->json([
                 'status'  => 'success',
