@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->decimal('return_rate', 8, 4);                     // Daily return rate (e.g., 1.5% = 0.015)
-            $table->integer('lock_period');                           // Lock period in days
-            $table->decimal('minimum_investment', 12, 2)->default(0); // Minimum investment amount
+            $table->decimal('return_rate', 8, 4);
+            $table->integer('lock_period');
+            $table->decimal('minimum_investment', 12, 2)->default(0);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
