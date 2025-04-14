@@ -2,10 +2,13 @@
 namespace App\Models;
 
 use App\Models\Investment;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class InvestmentPlan extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'description',
