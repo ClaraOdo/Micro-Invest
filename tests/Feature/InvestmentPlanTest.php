@@ -93,4 +93,29 @@ class InvestmentPlanTest extends TestCase
                 ],
             ]);
     }
+    //inactive plan
+    public function test_show_does_not_return_inactive_plan()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $inactivePlan = InvestmentPlan::factory()->create(['is_active' => false]);
+        $response     = $this->getJson("/api/investment-plans/{$inactivePlan->id}");
+
+        $response->assertStatus(404)
+            ->assertJson([
+                'status'  => 'error',
+                'message' => 'Investment plan not available',
+            ]);
+    }
+    //no ID
+    public function test_show_returns_404_for_no_id_plan()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // Make the request with an ID that does not exist
+        $response = $this->getJson("/api/investment-plans/999");
+        $response->assertStatus(404);
+    }
 }
