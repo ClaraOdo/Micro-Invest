@@ -59,4 +59,38 @@ class InvestmentPlanTest extends TestCase
             $this->assertContains($plan->id, $returnedIds);
         }
     }
+    //test for single plan
+    public function test_show_returns_active_plan()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $plan = InvestmentPlan::factory()->create([
+            'is_active' => true,
+        ]);
+
+        $response = $this->getJson("/api/investment-plans/{$plan->id}");
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'status',
+                'data' => [
+                    'id',
+                    'name',
+                    'description',
+                    'return_rate',
+                    'lock_period',
+                    'lock_period_text',
+                    'return_rate_percentage',
+                    'minimum_investment',
+                    'created_at',
+                ],
+            ])
+            ->assertJson([
+                'status' => 'success',
+                'data'   => [
+                    'id' => $plan->id,
+                ],
+            ]);
+    }
 }
